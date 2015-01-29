@@ -15,16 +15,36 @@ exports.status = function(request, response){
 	  res.on('end', function() {
 	    // parse xml
 	    parseString(xml, function (err, result) {
-	    	console.dir(result.service.bus[0].line);
-	    	var buses = result.service.bus[0].line;
+	    	console.dir(result.service.LIRR[0].line);
+	    	result.service.subway[0].line = sanitize(result.service.subway[0].line);
+	    	result.service.bus[0].line = sanitize(result.service.bus[0].line);
+	    	result.service.BT[0].line = sanitize(result.service.BT[0].line);
+	    	result.service.LIRR[0].line = sanitize(result.service.LIRR[0].line);
+	    	result.service.MetroNorth[0].line = sanitize(result.service.MetroNorth[0].line);
 
-		    for(bus in buses){
-		    	console.log(buses[bus].text[0])
-		    	buses[bus].text[0] = sanitizeHtml(buses[bus].text[0]) 
-		    	console.log(buses[bus].text[0])
-		    }	    	
+	    	// sanitize(subways)
 
-		    response.send(result.service.bus[0].line)
+		    // for(subway in subways){
+		    // 	subways[subway].text[0] = sanitizeHtml(subways[subway].text[0]) 
+		    // }		    
+
+		    // for(bus in buses){
+		    // 	buses[bus].text[0] = sanitizeHtml(buses[bus].text[0]) 
+		    // }
+
+		    // for(bus in buses){
+		    // 	buses[bus].text[0] = sanitizeHtml(buses[bus].text[0]) 
+		    // }
+
+		    // for(bus in buses){
+		    // 	buses[bus].text[0] = sanitizeHtml(buses[bus].text[0]) 
+		    // }
+
+		    // for(bus in buses){
+		    // 	buses[bus].text[0] = sanitizeHtml(buses[bus].text[0]) 
+		    // }		    		    
+
+		    response.send(result.service)
 		});
 
 
@@ -39,4 +59,12 @@ exports.status = function(request, response){
 	  // debug error
 	});
 
+}
+
+var sanitize = function(lines){
+    for(line in lines){
+    	lines[line].text[0] = sanitizeHtml(lines[line].text[0]) 
+    }
+
+    return lines	
 }
