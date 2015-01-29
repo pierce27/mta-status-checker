@@ -1,0 +1,37 @@
+<html ng-app="mta" lang="en" class="csstransforms csstransforms3d csstransitions js cssanimations csstransitions"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+		<!-- Angular -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.1/angular.min.js" type="text/javascript"></script>
+		<script src="https://code.angularjs.org/1.4.0-beta.1/angular-sanitize.js" type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="/controllers.js"></script>
+</head>
+
+<body ng-controller="mtaCtrl">
+<!-- 	<div ng-repeat="busLine in busLines">
+		<b><p>{{busLine.name[0]}}<span>    {{busLine.status[0]}}</span></p></b>
+		<p ng-bind-html="busLine.text[0]">{{busLine.text[0]}}</p>
+	</div> -->
+	<div ng-repeat="busLine in busLines" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	  <div class="panel panel-default">
+	    <div class="panel-heading" role="tab" id="headingOne">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#bus{{$index}}" aria-expanded="true" aria-controls="bus{{$index}}">
+	          {{busLine.name[0]}} {{busLine.status[0]}}
+	        </a>
+	      </h4>
+	    </div>
+	    <div id="bus{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+	      <div class="panel-body">
+	        <p ng-bind-html="busLine.text[0]">{{busLine.text[0]}}</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+</body>
