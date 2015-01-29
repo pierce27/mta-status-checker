@@ -23,8 +23,9 @@
 	    <div class="panel-heading" role="tab" id="headingOne">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#bus{{$index}}" aria-expanded="true" aria-controls="bus{{$index}}">
-	          {{busLine.name[0]}} {{busLine.status[0]}}
+	          {{busLine.name[0]}} 
 	        </a>
+	        <span class="label" ng-class="{'label-success': busLine.status[0] == 'GOOD SERVICE', 'label-warning': busLine.status[0] == 'PLANNED WORK', 'label-danger': busLine.status[0] == 'DELAYS'}">{{busLine.status[0]}}</span>
 	      </h4>
 	    </div>
 	    <div id="bus{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
