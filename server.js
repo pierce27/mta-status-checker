@@ -1,18 +1,20 @@
-var mta = require('./mta')
-var express = require('express');
 var http = require('http');
+var express = require('express');
+var mta = require('./mta')
 var app = express();
 var engines = require('consolidate');
-// app.use(express.bodyParser());
 app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/resources'));
 app.engine('html', engines.ejs);
 app.set('view engine', 'html');
-app.use(express.static(__dirname + '/resources'));
 
+// Send all mta status data
+app.get('/mta/status', mta.status)
 
-
-app.get('/bus', mta.status)
+// Render main view
 app.get("/", function(req, res){res.render('index.html')})
+
+// Start Sever
 app.listen(3000)
 
 

@@ -2,18 +2,12 @@ var mta = angular.module('mta', ['ngSanitize']);
 
 
 
-mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
-	
-    $scope.render = function(e) {
-    	console.log(e)
-    	console.log($(e).html());    	
-    	return $(e).html();
-    }	
+mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {	
 
-	$http({method: 'GET', url: '/bus'}).
+	// GET DATA FOR MTA SERVICE STATUS
+	$http({method: 'GET', url: '/mta/status'}).
 	success(function(data, status) {
 	  // console.log(data)
-	  $scope.types = data
 	  $scope.subways = data.subway[0].line;
 	  $scope.buses = data.bus[0].line;
 	  $scope.btLines = data.BT[0].line;
@@ -22,6 +16,7 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	  
 	}).
 	error(function(data, status) {
+		// TODO Alert if error
 	  
 	});		
 });

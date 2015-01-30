@@ -22,15 +22,14 @@
 	  <ul class="nav nav-tabs" role="tablist">
 	    <li role="presentation" class="active"><a href="#subway" aria-controls="subway" role="tab" data-toggle="tab">Subway</a></li>
 	    <li role="presentation"><a href="#bus" aria-controls="bus" role="tab" data-toggle="tab">Bus</a></li>
-	    <li role="presentation"><a href="#bt" aria-controls="bt" role="tab" data-toggle="tab">BT</a></li>
+	    <li role="presentation"><a href="#bt" aria-controls="bt" role="tab" data-toggle="tab">Bridge and Tunnel</a></li>
 	    <li role="presentation"><a href="#lirr" aria-controls="lirr" role="tab" data-toggle="tab">LIRR</a></li>
 	    <li role="presentation"><a href="#metronorth" aria-controls="metronorth" role="tab" data-toggle="tab">MetroNorth</a></li>
 	  </ul>
 
-	  <!-- Tab panes -->
+	  <!-- SUBWAYS -->
 	  <div class="tab-content">
 	    <div role="tabpanel" class="tab-pane active" id="subway">
-			<!-- SUBWAYS -->
 			<div ng-repeat="subway in subways" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			  <div class="panel panel-default">
 			    <div class="panel-heading" role="tab" id="headingOne">
@@ -43,7 +42,9 @@
 			    </div>
 			    <div id="subway{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <p ng-bind-html="subway.text[0]">{{subway.text[0]}}</p>
+			      	<h4 ng-class="{'hide': !subway.text[0]}">Updated: {{subway.Date[0]}} {{subway.Time[0]}}</h4>
+			        <p ng-bind-html="subway.text[0]" ng-class="{'hide': !subway.text[0]}">{{subway.text[0]}}</p>
+			        <h4 ng-class="{'hide': subway.text[0]}">No Updates</h4>
 			      </div>
 			    </div>
 			  </div>
@@ -59,12 +60,14 @@
 			        <a data-toggle="collapse" data-parent="#accordion" href="#bus{{$index}}" aria-expanded="true" aria-controls="bus{{$index}}">
 			          {{busLine.name[0]}} 
 			        </a>
-			        <span class="label" ng-class="{'label-success': busLine.status[0] == 'GOOD SERVICE', 'label-warning': busLine.status[0] == 'PLANNED WORK', 'label-danger': busLine.status[0] == 'DELAYS'}">{{busLine.status[0]}}</span>
+			        <span class="label" ng-class="{'label-success': busLine.status[0] == 'GOOD SERVICE', 'label-warning': busLine.status[0] == 'PLANNED WORK' || busLine.status[0] == 'SERVICE CHANGE', 'label-danger': busLine.status[0] == 'DELAYS'}">{{busLine.status[0]}}</span>
 			      </h4>
 			    </div>
 			    <div id="bus{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <p ng-bind-html="busLine.text[0]">{{busLine.text[0]}}</p>
+			      	<h4 ng-class="{'hide': !busLine.text[0]}">Updated: {{busLine.Date[0]}} {{busLine.Time[0]}}</h4>
+			        <p ng-bind-html="busLine.text[0]" ng-class="{'hide': !busLine.text[0]}">{{busLine.text[0]}}</p>
+			        <h4 ng-class="{'hide': busLine.text[0]}">No Updates</h4>		        
 			      </div>
 			    </div>
 			  </div>
@@ -80,12 +83,14 @@
 			        <a data-toggle="collapse" data-parent="#accordion" href="#bt{{$index}}" aria-expanded="true" aria-controls="bt{{$index}}">
 			          {{btLine.name[0]}} 
 			        </a>
-			        <span class="label" ng-class="{'label-success': btLine.status[0] == 'GOOD SERVICE', 'label-warning': btLine.status[0] == 'PLANNED WORK', 'label-danger': btLine.status[0] == 'DELAYS'}">{{btLine.status[0]}}</span>
+			        <span class="label" ng-class="{'label-success': btLine.status[0] == 'GOOD SERVICE', 'label-warning': btLine.status[0] == 'PLANNED WORK' || btLine.status[0] == 'SERVICE CHANGE', 'label-danger': btLine.status[0] == 'DELAYS'}">{{btLine.status[0]}}</span>
 			      </h4>
 			    </div>
 			    <div id="bt{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <p ng-bind-html="btLine.text[0]">{{btLine.text[0]}}</p>
+			      	<h4 ng-class="{'hide': !btLine.text[0]}">Updated: {{btLine.Date[0]}} {{btLine.Time[0]}}</h4>
+			        <p ng-bind-html="btLine.text[0]" ng-class="{'hide': !btLine.text[0]}">{{btLine.text[0]}}</p>
+			        <h4 ng-class="{'hide': btLine.text[0]}">No Updates</h4>
 			      </div>
 			    </div>
 			  </div>
@@ -101,17 +106,21 @@
 			        <a data-toggle="collapse" data-parent="#accordion" href="#lirr{{$index}}" aria-expanded="true" aria-controls="lirr{{$index}}">
 			          {{lirrLine.name[0]}} 
 			        </a>
-			        <span class="label" ng-class="{'label-success': lirrLine.status[0] == 'GOOD SERVICE', 'label-warning': lirrLine.status[0] == 'PLANNED WORK', 'label-danger': lirrLine.status[0] == 'DELAYS'}">{{lirrLine.status[0]}}</span>
+			        <span class="label" ng-class="{'label-success': lirrLine.status[0] == 'GOOD SERVICE', 'label-warning': lirrLine.status[0] == 'PLANNED WORK' || lirrLine.status[0] == 'SERVICE CHANGE', 'label-danger': lirrLine.status[0] == 'DELAYS'}">{{lirrLine.status[0]}}</span>
 			      </h4>
 			    </div>
 			    <div id="lirr{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <p ng-bind-html="lirrLine.text[0]">{{lirrLine.text[0]}}</p>
+			      	<h4 ng-class="{'hide': !lirrLine.text[0]}">Updated: {{lirrLine.Date[0]}} {{lirrLine.Time[0]}}</h4>
+			        <p ng-bind-html="lirrLine.text[0]" ng-class="{'hide': !lirrLine.text[0]}">{{lirrLine.text[0]}}</p>
+			        <h4 ng-class="{'hide': lirrLine.text[0]}">No Updates</h4>
 			      </div>
 			    </div>
 			  </div>
 			</div>		    	
 	    </div>
+
+	    <!-- METRO NORTH -->
 	    <div role="tabpanel" class="tab-pane" id="metronorth">
 			<div ng-repeat="metroNorthLine in metroNorthLines" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			  <div class="panel panel-default">
@@ -120,12 +129,14 @@
 			        <a data-toggle="collapse" data-parent="#accordion" href="#metronorth{{$index}}" aria-expanded="true" aria-controls="metronorth{{$index}}">
 			          {{metroNorthLine.name[0]}} 
 			        </a>
-			        <span class="label" ng-class="{'label-success': metroNorthLine.status[0] == 'GOOD SERVICE', 'label-warning': metroNorthLine.status[0] == 'PLANNED WORK', 'label-danger': metroNorthLine.status[0] == 'DELAYS'}">{{metroNorthLine.status[0]}}</span>
+			        <span class="label" ng-class="{'label-success': metroNorthLine.status[0] == 'GOOD SERVICE', 'label-warning': metroNorthLine.status[0] == 'PLANNED WORK' || metroNorthLine.status[0] == 'SERVICE CHANGE', 'label-danger': metroNorthLine.status[0] == 'DELAYS'}">{{metroNorthLine.status[0]}}</span>
 			      </h4>
 			    </div>
 			    <div id="metronorth{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <p ng-bind-html="metroNorthLine.text[0]">{{metroNorthLine.text[0]}}</p>
+			      	<h4 ng-class="{'hide': !metroNorthLine.text[0]}">Updated: {{metroNorthLine.Date[0]}} {{metroNorthLine.Time[0]}}</h4>
+			        <p ng-bind-html="metroNorthLine.text[0]" ng-class="{'hide': !metroNorthLine.text[0]}">{{metroNorthLine.text[0]}}</p>
+			        <h4 ng-class="{'hide': metroNorthLine.text[0]}">No Updates</h4>
 			      </div>
 			    </div>
 			  </div>
