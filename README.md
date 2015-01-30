@@ -4,6 +4,6 @@ Displays status of current MTA lines allowing to you to save favorites and searc
 To get started run:
 
 `npm install`
-`node server.js'
+`node server.js`
 
 Then go to localhost:3000
