@@ -8,7 +8,10 @@
     "consolidate": "^0.10.0",
     "ejs": "^2.2.3",
     "express": "^4.11.1",
-    "xml2js": "^0.4.4"
+    "xml2js": "^0.4.4",
+    "body-parser": "",
+    "passport": "",
+    "passport-local": ""
   },
   "devDependencies": {},
   "scripts": {
