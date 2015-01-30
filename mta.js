@@ -15,20 +15,19 @@ exports.status = function(request, response){
 	  res.on('end', function() {
 	    // parse xml
 	    parseString(xml, function (err, result) {
-	    	// console.dir(result.service.LIRR[0].line);
-	    	result.service.subway[0].line = sanitize(result.service.subway[0].line);
-	    	result.service.bus[0].line = sanitize(result.service.bus[0].line);
-	    	result.service.BT[0].line = sanitize(result.service.BT[0].line);
-	    	result.service.LIRR[0].line = sanitize(result.service.LIRR[0].line);
-	    	result.service.MetroNorth[0].line = sanitize(result.service.MetroNorth[0].line);	    		    
+	    	// Create one array of all lines
+	    	var data = {'timestamp':result.service.timestamp[0], 'lines':[]}
+	    	data.lines = data.lines.concat(sanitize(result.service.subway[0].line, 'subway'));
+	    	data.lines = data.lines.concat( sanitize(result.service.bus[0].line, 'bus'));
+	    	data.lines = data.lines.concat(sanitize(result.service.BT[0].line, 'bt'));
+	    	data.lines = data.lines.concat(sanitize(result.service.LIRR[0].line, 'lirr'));
+	    	data.lines = data.lines.concat(sanitize(result.service.MetroNorth[0].line, 'mt'));
+	    	
 
-	    	// Send all data to client side
-	    	console.log(result.service)
-		    response.send(result.service)
+	    	// Send all mta lines to client side
+		    response.send(data)
 
 		});
-
-
 
 	  });
 	  
@@ -38,12 +37,13 @@ exports.status = function(request, response){
 	  // send error
 	  response.send(err)
 	});
-
 }
 
-var sanitize = function(lines){
+// Format array of lines to include type and sanitize html
+var sanitize = function(lines, type){
     for(line in lines){
-    	lines[line].text[0] = sanitizeHtml(lines[line].text[0]) 
+    	lines[line].text[0] = sanitizeHtml(lines[line].text[0]); 
+    	lines[line].type = type;
     }
 
     return lines	
