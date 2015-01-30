@@ -15,7 +15,7 @@ app.get('/mta/status', mta.status)
 app.get("/", function(req, res){res.render('index.html')})
 
 // Start Sever
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
 
 
 
