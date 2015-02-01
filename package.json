@@ -11,7 +11,9 @@
     "xml2js": "^0.4.4",
     "body-parser": "",
     "passport": "",
-    "passport-local": ""
+    "passport-local": "",
+    "mongoose": "",
+    "cookie-parser": ""
   },
   "devDependencies": {},
   "scripts": {

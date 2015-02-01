@@ -15,5 +15,24 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	error(function(data, status) {
 		// TODO Alert if error
 	  
-	});		
+	});	
+
+	$scope.login = 	function(){
+	    var user = {
+	      'username': this.username,
+	      'password': this.password
+	    };
+
+		$http.post('/login', user).
+		success(function(data, status) {
+		  console.log(data) 
+		  console.log('hello')	
+		}).
+		error(function(data, status) {
+			// TODO Alert if error
+			console.log(data)
+			console.log('hello error')	  
+		  
+		});			
+	}
 });

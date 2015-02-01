@@ -1,3 +1,4 @@
+var util = require('util');
 // MTA status functions
 var mta = require('./mta')
 // Routing middleware
@@ -11,6 +12,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var user = require('./user')
 var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
 // View config
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/resources'));
@@ -23,6 +25,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 // Send all mta status data
@@ -33,23 +36,23 @@ app.get("/", function(req, res){res.render('index.html')})
 
 passport.use(new LocalStrategy(function(username, password, done) {
     // no authentication logic here... just return done with an object with 2 fields
+    console.log(username)
     user.findUser(username, password, done)
 }));
 
-app.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/loginSuccess',
-    failureRedirect: '/loginFailure'
-  })
-);
+// function(req,res){console.log(req.body)},
+app.post('/login', passport.authenticate('local'), function(req, res) { res.send(req.user); }); 
  
 app.get('/loginFailure', function(req, res, next) {
   res.send('Failed to authenticate');
 });
+
  
 app.get('/loginSuccess', function(req, res, next) {
   res.send('Successfully authenticated');
 });
+
+app.get('/user', user.getUser);
 
 passport.serializeUser(function(user, done) {
   done(null, user);
