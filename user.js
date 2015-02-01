@@ -1,4 +1,3 @@
-var util = require('util');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
@@ -15,31 +14,26 @@ testuser.save(function (err, testuser) {
 });
 
 
+exports.findUserLogin = function(username, password, done){
 
-
-
-
-
-
-
-
-var users = [{'username':'apierce', 'password': 'password1'}, {'username':'mike', 'password': 'password2'}];
-
-
-exports.findUser = function(username, password, done){
-
-	Person.findOne({ 'username': username }, function (err, user) {
+	User.findOne({ 'username': username }, function (err, user) {
 	  if (err) return done(null, false);
 
 	  if(user.password == password){
+	  	console.log('found user')
 	  	return done(null, user)
-	  	console.log(user)
 	  } else{
 	  	return done(null, false)
-	  	console.log(user)
 	  }
 	  
 	})
+}
 
+exports.findUser = function(req,res){
 
+	User.findOne({ 'username': req.cookies.user }, function (err, user) {
+	  if (err) return err;
+	  res.send(user)
+	  
+	})
 }

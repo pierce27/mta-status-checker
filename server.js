@@ -32,28 +32,27 @@ app.use(cookieParser());
 app.get('/mta/status', mta.status)
 
 // Render main view
-app.get("/", function(req, res){res.render('index.html')})
+app.get("/", function(req, res){
+	console.log(util.inspect(req))
+	res.render('index.html')
+})
+
+app.get('/user', user.findUser)
+
 
 passport.use(new LocalStrategy(function(username, password, done) {
     // no authentication logic here... just return done with an object with 2 fields
     console.log(username)
-    user.findUser(username, password, done)
+    user.findUserLogin(username, password, done)
 }));
 
-// function(req,res){console.log(req.body)},
-app.post('/login', passport.authenticate('local'), function(req, res) { res.send(req.user); }); 
+
+app.post('/login', passport.authenticate('local'), function(req, res) { 
+	res.cookie('user', req.user.username, { maxAge: 2592000000 })
+	console.log(req.user.username)
+	res.send(req.user); 
+}); 
  
-app.get('/loginFailure', function(req, res, next) {
-  res.send('Failed to authenticate');
-});
-
- 
-app.get('/loginSuccess', function(req, res, next) {
-  res.send('Successfully authenticated');
-});
-
-app.get('/user', user.getUser);
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
