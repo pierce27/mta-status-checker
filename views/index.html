@@ -81,6 +81,7 @@
 		          {{line.name[0]}} 
 		        </a>
 		        <span class="label" ng-class="{'label-success': line.status[0] == 'GOOD SERVICE', 'label-warning': line.status[0] == 'PLANNED WORK' || line.status[0] == 'SERVICE CHANGE', 'label-danger': line.status[0] == 'DELAYS'}">{{line.status[0]}}</span>
+		        <span ng-class="{'hide': !user}" class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
 		      </h4>
 		    </div>
 		    <div id="line{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
