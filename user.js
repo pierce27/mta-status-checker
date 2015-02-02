@@ -13,20 +13,42 @@ testuser.save(function (err, testuser) {
   console.log(testuser + 'saved')
 });
 
-
 exports.findUserLogin = function(username, password, done){
 
 	User.findOne({ 'username': username }, function (err, user) {
 	  if (err) return done(null, false);
 
-	  if(user.password == password){
-	  	console.log('found user')
-	  	return done(null, user)
+	  if(user){
+		if(user.password == password){
+	  	  console.log('found user')
+	  	  return done(null, user)
+	    } else{
+	  	  return done(null, false)
+	    }	  	
 	  } else{
 	  	return done(null, false)
 	  }
 	  
+	  
 	})
+}
+
+exports.createUser = function(username, password, done){
+
+	newUser = new User({username: username, password: password, favorites: {'size':0}})
+	
+	User.findOne({ 'username': username }, function (err, user) {
+	  if (err) return done(null, false);
+
+	  if(!user){
+	  	console.log('no user')
+	  	newUser.save()
+	  	return done(null, newUser)
+	  } else{
+	  	return done(null, false)
+	  }
+	  
+	})	
 }
 
 exports.findUser = function(req,res){
@@ -50,6 +72,9 @@ exports.modifyFavorites = function(req, res){
 	});
 
 }
+
+
+
 
 
 
