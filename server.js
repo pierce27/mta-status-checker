@@ -53,6 +53,11 @@ app.post('/login', passport.authenticate('local'), function(req, res) {
 	res.send(req.user); 
 }); 
 
+app.get('/logout', function(req, res){
+  res.clearCookie('user');
+  res.sendStatus(201)
+})
+
 app.post('/favorites', user.modifyFavorites)
  
 passport.serializeUser(function(user, done) {

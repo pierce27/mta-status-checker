@@ -7,7 +7,7 @@ var User = mongoose.model('User',{
     favorites: Object
 });
 
-var testuser = new User({username: 'apierce', password: 'password1', favorites: {'x1 - x68':true, 'BX1 - BX55':true, '123':true}})
+var testuser = new User({username: 'apierce', password: 'password1', favorites: {'size':0}})
 testuser.save(function (err, testuser) {
   if (err) return console.error(err);
   console.log(testuser + 'saved')

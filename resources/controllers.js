@@ -6,12 +6,15 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		console.log(document.cookie)
 		$http({method: 'GET', url: '/user'}).
 		success(function(data, status) {
-		  console.log(data)
-		  $scope.user = data 	  
+		  // Set user data in the scope
+		  $scope.user = data; 	
+		  if($scope.user.favorites.size > 0){
+		  	$scope.showFavorites = true;
+		  }  
 		}).
 		error(function(data, status) {
 			// TODO Alert if error
-		  
+		  	alert(status)
 		});			
 
 	}
@@ -51,8 +54,10 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		var favorites = angular.copy($scope.user.favorites);
 		if(favorites[line.name[0]] == true){
 			favorites[line.name[0]] = false
+			favorites.size = favorites.size - 1
 		} else{
 			favorites[line.name[0]] = true	
+			favorites.size = favorites.size + 1
 		}
 		
 		// Send name to server to add it to favorites array or delete it
@@ -69,10 +74,25 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		
 	}
 
+	$scope.signOut = function(){
+		$http.get('/logout').
+		success(function(data, status){
+			console.log(status)
+			$scope.user = '';
+			document.cookie = '';
+			$scope.showFavorites = false;
+		}).
+		error(function(data, status){
+			// TODO Handle error
+			console.log(status)
+
+		})
+	}
+
 
 	$scope.displayDetails = function(line){
 		$scope.currentLine = line;
-		$('#detailsModal').modal('show')
+		$('#detailsModal').modal('show');
 
 	}
 
@@ -81,14 +101,18 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	    // Do some tests
 	    if($scope.showFavorites == true){
 			if($scope.user.favorites[line.name[0]] == true){
-				return true
+				return true;
 			} else{
-				return false
+				return false;
 			}
 		} else{
 			return true;
 		}
 	}	
+
+	$scope.hideFavorites = function(){
+		$scope.showFavorites = false;
+	}
 
 
 

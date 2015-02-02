@@ -23,10 +23,10 @@
 
 	      <form class="navbar-form navbar-left" role="search">
 	        <div class="form-group">
-	          <input type="text" class="form-control" ng-model="search.name" placeholder="Search">
+	          <input ng-change="hideFavorites()" type="text" class="form-control" ng-model="search.name" placeholder="Search">
 	        </div>
 
-			<select class="form-control" ng-model='search.type'>
+			<select ng-change="hideFavorites()" class="form-control" ng-model='search.type'>
 			  <option value=''>All</option>	
 			  <option value='subway'>Subway</option>
 			  <option value='bus'>Bus</option>
@@ -35,7 +35,7 @@
 			  <option value='mt'>Metro North</option>
 			</select>
 
-			<select class="form-control" ng-model='search.status'>
+			<select ng-change="hideFavorites()" class="form-control" ng-model='search.status'>
 			  <option value=''>All</option>	
 			  <option value='DELAY'>Delay</option>
 			  <option value='SERVICE CHANGE'>Service Change</option>
@@ -45,7 +45,7 @@
 
 		    <div class="checkbox">
 		      <label ng-class="{'hide': !user}">
-		        <input ng-model="showFavorites"  type="checkbox"> Favorites
+		        <input ng-model="showFavorites"  type="checkbox"> Favorites <span class="badge">{{user.favorites.size}}</span>
 		      </label>
 		    </div>					
 
@@ -55,6 +55,10 @@
 	      <button type="button" class="btn btn-primary btn-lg" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
   			Sign In
 		 </button>
+
+	      <button type="button" class="btn btn-primary btn-lg" ng-class="{'hide': !user}" ng-click="signOut()" data-toggle="modal" data-target="#signInModal">
+  			Sign Out
+		 </button>		 
 	  </div><!-- /.container-fluid -->
 	</nav>	
 
@@ -65,7 +69,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="signInLabel">Modal title</h4>
+	        <h4 class="modal-title" id="signInLabel">Sign In</h4>
 	      </div>
 	      <div class="modal-body">
 		    <form ng-submit="login()">
