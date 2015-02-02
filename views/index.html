@@ -41,7 +41,13 @@
 			  <option value='SERVICE CHANGE'>Service Change</option>
 			  <option value='PLANNED WORK'>Planned Work</option>
 			  <option value='GOOD SERVICE'>Good Service</option>
-			</select>			
+			</select>	
+
+		    <div class="checkbox">
+		      <label>
+		        <input ng-model="showFavorites" type="checkbox"> Favorites
+		      </label>
+		    </div>					
 
 
 	      </form>
@@ -74,35 +80,46 @@
 			  <button type="submit" class="btn btn-default">Submit</button>
 			</form>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
 	    </div>
 	  </div>
 	</div>	
 
 	<div class="col-md-6">
-		<div ng-repeat="line in lines | filter:search " class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingOne">
-		      <h4 class="panel-title">
-		        <a data-toggle="collapse" data-parent="#accordion" href="#line{{$index}}" aria-expanded="true" aria-controls="line{{$index}}">
-		          {{line.name[0]}} 
-		        </a>
-		        <span class="label" ng-class="{'label-success': line.status[0] == 'GOOD SERVICE', 'label-warning': line.status[0] == 'PLANNED WORK' || line.status[0] == 'SERVICE CHANGE', 'label-danger': line.status[0] == 'DELAYS'}">{{line.status[0]}}</span>
-		        <span ng-class="{'hide': !user}" class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-		      </h4>
-		    </div>
-		    <div id="line{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-		      <div class="panel-body">
-		      	<h4 ng-class="{'hide': !line.text[0]}">Updated: {{line.Date[0]}} {{line.Time[0]}}</h4>
-		        <p ng-bind-html="line.text[0]" ng-class="{'hide': !line.text[0]}">{{line.text[0]}}</p>
-		        <h4 ng-class="{'hide': line.text[0]}">No Updates</h4>
+
+	    <table class="table">
+	      <thead>
+	        <tr>
+	          <th>Name</th>
+	          <th>Status</th>
+	          <th>Details</th>
+	          <th>Updated</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr ng-repeat="line in lines | filter:search | filter:favoritesFilter ">
+	          <td>{{line.name[0]}}</td>
+	          <td><span class="label" ng-class="{'label-success': line.status[0] == 'GOOD SERVICE', 'label-warning': line.status[0] == 'PLANNED WORK' || line.status[0] == 'SERVICE CHANGE', 'label-danger': line.status[0] == 'DELAYS'}">{{line.status[0]}}</span></td>
+	          <td><a ng-click="displayDetails(line)"><span ng-class="{'hide': !line.text[0]}" class="glyphicon glyphicon-info-sign"></span></a></td>
+	          <td>{{line.Date[0]}} {{line.Time[0]}}</td>
+	          <td><a ng-click='modifyFavorites(line)'><span ng-class="{'hide': !user, 'glyphicon-plus': !user.favorites[line.name[0]], 'glyphicon-minus': user.favorites[line.name[0]]}" class="glyphicon  pull-right" aria-hidden="true"></span></a></td>
+	        </tr>
+	      </tbody>
+	    </table>
+
+		<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="details" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="signInLabel">{{currentLine.name[0]}}  <span class="label" ng-class="{'label-success': currentLine.status[0] == 'GOOD SERVICE', 'label-warning': currentLine.status[0] == 'PLANNED WORK' || currentLine.status[0] == 'SERVICE CHANGE', 'label-danger': currentLine.status[0] == 'DELAYS'}">{{currentLine.status[0]}}</span></h4>
 		      </div>
-		    </div>
+		      <div class="modal-body" ng-bind-html="currentLine.text[0]">
+		      	{{currentLine.text[0]}}
+		      </div>
 		  </div>
-		</div>	
+		</div>	    
+
+
 	</div>	    	
 	    
 

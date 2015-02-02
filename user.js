@@ -4,10 +4,10 @@ mongoose.connect('mongodb://localhost/test');
 var User = mongoose.model('User',{
     username: String,
     password: String,
-    favorites: Array
+    favorites: Object
 });
 
-var testuser = new User({username: 'apierce', password: 'password1', favorites: ['x1']})
+var testuser = new User({username: 'apierce', password: 'password1', favorites: {'x1 - x68':true, 'BX1 - BX55':true, '123':true}})
 testuser.save(function (err, testuser) {
   if (err) return console.error(err);
   console.log(testuser + 'saved')
