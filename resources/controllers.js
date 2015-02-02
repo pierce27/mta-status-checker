@@ -35,10 +35,9 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 
 		$http.post('/login', user).
 		success(function(data, status) {
-		  console.log(data) 
-		  console.log('hello')
+		  console.log(data);
 		  $scope.user = data;
-		  $('#signInModal').modal('hide')	
+		  $('#signInModal').modal('hide');	
 		}).
 		error(function(data, status) {
 			// TODO Alert if error
@@ -47,4 +46,37 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		  
 		});			
 	}
+
+	$scope.modifyFavorites = function(line){
+		if($scope.user.favorites[])
+	}
+
+
+	$scope.displayDetails = function(line){
+		$scope.currentLine = line;
+		$('#detailsModal').modal('show')
+
+	}
+
+
+	$scope.favoritesFilter = function(line){
+	    // Do some tests
+	    if($scope.showFavorites == true){
+			if($scope.user.favorites[line.name[0]] == true){
+				return true
+			} else{
+				return false
+			}
+		} else{
+			return true;
+		}
+	}	
+
+
+
+
+
+
+
+
 });
