@@ -33,7 +33,17 @@
 			  <option value='lirr'>LIRR</option>
 			  <option value='bt'>Bridge and Tunnel</option>
 			  <option value='mt'>Metro North</option>
-			</select>	        
+			</select>
+
+			<select class="form-control" ng-model='search.status'>
+			  <option value=''>All</option>	
+			  <option value='DELAY'>Delay</option>
+			  <option value='SERVICE CHANGE'>Service Change</option>
+			  <option value='PLANNED WORK'>Planned Work</option>
+			  <option value='GOOD SERVICE'>Good Service</option>
+			</select>			
+
+
 	      </form>
 	      <p class="navbar-text">Updated: {{timestamp}}</p>
 	      <button type="button" class="btn btn-primary btn-lg" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
@@ -73,7 +83,7 @@
 	</div>	
 
 	<div class="col-md-6">
-		<div ng-repeat="line in lines | filter:search" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div ng-repeat="line in lines | filter:search " class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		  <div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="headingOne">
 		      <h4 class="panel-title">
