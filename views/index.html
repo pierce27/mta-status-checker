@@ -60,7 +60,7 @@
   			Sign Out
 		 </button>
 
-		 <p class="navbar-text pull-right">Logged In as {{user.username}}</p>		 
+		 <p ng-class="{'hide': !user}" class="navbar-text pull-right">Logged In as {{user.username}}</p>		 
 	  </div><!-- /.container-fluid -->
 	</nav>	
 

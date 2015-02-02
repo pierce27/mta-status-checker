@@ -10,7 +10,9 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		  $scope.user = data; 	
 		  if($scope.user.favorites.size > 0){
 		  	$scope.showFavorites = true;
-		  }  
+		  } else{
+		  	$scope.showFavorites = false;
+		  } 
 		}).
 		error(function(data, status) {
 			// TODO Alert if error
@@ -40,7 +42,11 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		success(function(data, status) {
 		  console.log(data);
 		  $scope.user = data;
-		  $scope.showFavorites = true;
+		  if($scope.user.favorites.size > 0){
+		  	$scope.showFavorites = true;
+		  } else{
+		  	$scope.showFavorites = false;
+		  } 
 		  $('#signInModal').modal('hide');
 
 		}).
@@ -66,7 +72,13 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 			success(function(data, status) {
 			  console.log(data);
 			  $scope.user = data;
-			  $scope.showFavorites = true;
+			  // Show favorites if they exist
+			  if($scope.user.favorites.size > 0){
+		  	    $scope.showFavorites = true;
+		  	  } else{
+		  	    $scope.showFavorites = false;
+		      }
+
 			  $('#signInModal').modal('hide');
 
 			}).
