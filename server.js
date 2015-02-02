@@ -53,12 +53,15 @@ app.post('/login', passport.authenticate('local'), function(req, res) {
 	res.send(req.user); 
 }); 
 
+// Logout and delete cookite
 app.get('/logout', function(req, res){
   res.clearCookie('user');
   res.sendStatus(201)
 })
 
+// Save or delete favorites
 app.post('/favorites', user.modifyFavorites)
+
  
 passport.serializeUser(function(user, done) {
   done(null, user);
