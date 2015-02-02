@@ -16,11 +16,12 @@
 <body ng-controller="mtaCtrl">
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
+
 	      <div class="navbar-header">
 	        <a class="navbar-brand" href="#">MTA Status</a>
 	      </div>
 
+	      <!-- FILTER INPUTS -->
 	      <form class="navbar-form navbar-left" role="search">
 	        <div class="form-group">
 	          <input ng-change="hideFavorites()" type="text" class="form-control" ng-model="search.name" placeholder="Search">
@@ -51,15 +52,19 @@
 
 
 	      </form>
+
+	      <!-- Display Time Feed was updated -->
 	      <p class="navbar-text">Updated: {{timestamp}}</p>
-	      <button type="button" class="btn btn-primary" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
+
+	      <!-- Sign in and sign out buttons -->
+	      <button type="button" class="btn btn-default navbar-btn" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
   			Sign In
 		 </button>
-
-	      <button type="button" class="btn btn-primary" ng-class="{'hide': !user}" ng-click="signOut()" data-toggle="modal" data-target="#signInModal">
+	      <button type="button" class="btn btn-default navbar-btn" ng-class="{'hide': !user}" ng-click="signOut()" >
   			Sign Out
 		 </button>
 
+		 <!-- Log in text for when user is logged in -->
 		 <p ng-class="{'hide': !user}" class="navbar-text pull-right">Logged In as {{user.username}}</p>		 
 	  </div><!-- /.container-fluid -->
 	</nav>	
@@ -77,7 +82,7 @@
 
 			<div role="tabpanel">
 
-			  <!-- Nav tabs -->
+			  <!-- Tabs for signing in or up -->
 			  <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active"><a href="#signIn" aria-controls="signIn" role="tab" data-toggle="tab">Sign In</a></li>
 			    <li role="presentation"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Sign Up</a></li>
@@ -85,8 +90,9 @@
 
 			  <!-- Tab panes -->
 			  <div class="tab-content">
+			  	<!-- Sign In -->
 			    <div role="tabpanel" class="tab-pane active" id="signIn">
-				    <form ng-submit="login()">
+				    <form ng-submit="signIn()">
 					  <div class="form-group">
 					    <label for="username">User Name</label>
 					    <input type="string" class="form-control" id="username" ng-model="username" placeholder="Enter User Name">
@@ -99,6 +105,7 @@
 					</form>
 			    </div>
 			    <div role="tabpanel" class="tab-pane" id="signUp">
+			    	<!-- Sign Up -->
 				    <form ng-submit="signUp()">
 					  <div class="form-group">
 					    <label for="username">User Name</label>
@@ -106,12 +113,12 @@
 					  </div>
 					  <div class="form-group">
 					    <label for="password">Password</label>
-					    <input type="password" class="form-control" id="passwordConfirm" ng-model="confirmPassword" placeholder="Password">
+					    <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password">
 					  </div>
 					  <div class="form-group">
-					    <label for="password">Password</label>
-					    <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password">
-					  </div>					  
+					    <label for="password">Confrim Password</label>
+					    <input type="password" class="form-control" id="passwordConfirm" ng-model="confirmPassword" placeholder="Password">
+					  </div>					  					  
 					  <button type="submit" class="btn btn-default">Submit</button>
 					</form>
 			    </div>
@@ -125,7 +132,7 @@
 	</div>	
 
 	<div class="col-md-6">
-
+		<!-- Lines Table -->
 	    <table class="table">
 	      <thead>
 	        <tr>
@@ -139,14 +146,18 @@
 	      <tbody>
 	        <tr ng-repeat="line in lines | filter:search | filter:favoritesFilter ">
 	          <td>{{line.name[0]}}</td>
+	          <!-- Status display, change color with ng-class depending on status -->
 	          <td><span class="label" ng-class="{'label-success': line.status[0] == 'GOOD SERVICE', 'label-warning': line.status[0] == 'PLANNED WORK' || line.status[0] == 'SERVICE CHANGE', 'label-danger': line.status[0] == 'DELAYS'}">{{line.status[0]}}</span></td>
+	          <!-- Info button for more details only if they are available -->
 	          <td><a ng-click="displayDetails(line)"><span ng-class="{'hide': !line.text[0]}" class="glyphicon glyphicon-info-sign"></span></a></td>
 	          <td>{{line.Date[0]}} {{line.Time[0]}}</td>
+	          <!-- Add or remove favorites button -->
 	          <td><a ng-click='modifyFavorites(line)'><span ng-class="{'hide': !user, 'glyphicon-plus': !user.favorites[line.name[0]], 'glyphicon-minus': user.favorites[line.name[0]]}" class="glyphicon  pull-right" aria-hidden="true"></span></a></td>
 	        </tr>
 	      </tbody>
 	    </table>
 
+	    <!-- Details modal -->
 		<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="details" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">

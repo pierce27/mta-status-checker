@@ -2,6 +2,7 @@ var mta = angular.module('mta', ['ngSanitize']);
 
 mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {	
 
+	// Check for cookie and if it exists get user data from server
 	if(document.cookie){
 		console.log(document.cookie)
 		$http({method: 'GET', url: '/user'}).
@@ -32,15 +33,17 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	  
 	});	
 
-	$scope.login = 	function(){
+	// SIGN IN 
+	$scope.signIn = function(){
+		// Create user object to send to server
 	    var user = {
 	      'username': this.username,
 	      'password': this.password
 	    };
 
+	    // Attempt to login to server
 		$http.post('/login', user).
 		success(function(data, status) {
-		  console.log(data);
 		  $scope.user = data;
 		  if($scope.user.favorites.size > 0){
 		  	$scope.showFavorites = true;
@@ -51,42 +54,38 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 
 		}).
 		error(function(data, status) {
-			// TODO Alert if error
-			console.log(data)
-			console.log('hello error')	  
+			
 			alert('Incorrect Login')
 		  
 		});			
 	}
 
-	$scope.signUp = 	function(){
+	// SIGN UP
+	$scope.signUp = function(){
+		// Create user object to send to sever
 	    var user = {
 	      'username': this.username,
 	      'password': this.password
 	    };
 
+	    // Check that passwords match
 	    if(this.password != this.confirmPassword){
 	    	alert('Passwords do not match')
 	    } else{
+	    	// If passwords match then send data to server
 			$http.post('/signUp', user).
 			success(function(data, status) {
-			  console.log(data);
+			  // Send user object of scope to the newly create user
 			  $scope.user = data;
-			  // Show favorites if they exist
-			  if($scope.user.favorites.size > 0){
-		  	    $scope.showFavorites = true;
-		  	  } else{
-		  	    $scope.showFavorites = false;
-		      }
-
+			  // Set show favorites to false because new users do not have any
+		  	  $scope.showFavorites = false;
+		  	  // Hide sign in modal
 			  $('#signInModal').modal('hide');
 
 			}).
 			error(function(data, status) {
-				// TODO Alert if error
-				console.log(data)
-				console.log('hello error')	  
-				alert('Incorrect Login')
+				// Alert if error  
+				alert('User Name Taken')
 			  
 			});				    	
 	    }
@@ -94,13 +93,19 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		
 	}	
 
+	// SIGN OUT
 	$scope.signOut = function(){
+		// Logout from server so cookies can be cleared
 		$http.get('/logout').
 		success(function(data, status){
-			console.log(status)
+			// Delete user object
 			$scope.user = '';
+			// Clear cookies
 			document.cookie = '';
+			// Hide favorites because user is not logged in
 			$scope.showFavorites = false;
+			// Show sign in modal to sign in again if needed
+			$('#signInModal').modal('show');
 		}).
 		error(function(data, status){
 			// TODO Handle error
@@ -110,8 +115,11 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	}
 
 
+	// ADD OR REMOVE A FAVORITE
 	$scope.modifyFavorites = function(line){
+		// Make copy of current user favorites
 		var favorites = angular.copy($scope.user.favorites);
+		// If the line being modified is a favorite then mark it as false to remove from favorites and decrement by 1 else do the inverse
 		if(favorites[line.name[0]] == true){
 			favorites[line.name[0]] = false
 			favorites.size = favorites.size - 1
@@ -120,7 +128,7 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 			favorites.size = favorites.size + 1
 		}
 		
-		// Send name to server to add it to favorites array or delete it
+		// Send new favorites object to server to save on current user
 		$http.post('/favorites', favorites).
 		  success(function(data, status, headers, config) {
 		  	console.log('saved: '+ data)
@@ -128,12 +136,13 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		  }).
 		  error(function(data, status, headers, config) {
 		    // TODO Handle Error
-		    console.log('error '+ data)
+		    alert('Error saving data ' + status)
 
 		  });			
 		
 	}
 
+	// Display details of selected line by setting currentLine to the line passed from view and display modal
 	$scope.displayDetails = function(line){
 		$scope.currentLine = line;
 		$('#detailsModal').modal('show');
@@ -141,8 +150,9 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	}
 
 
+	// FAVORITES FILTER
 	$scope.favoritesFilter = function(line){
-	    // Do some tests
+	    // Check if favorites should be filtered and check if line is favorite. If not then return all as true
 	    if($scope.showFavorites == true){
 			if($scope.user.favorites[line.name[0]] == true){
 				return true;
@@ -154,6 +164,7 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		}
 	}	
 
+	// When using search or filters, run this params on all
 	$scope.hideFavorites = function(){
 		$scope.showFavorites = false;
 	}
