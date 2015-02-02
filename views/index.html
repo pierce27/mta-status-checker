@@ -52,37 +52,73 @@
 
 	      </form>
 	      <p class="navbar-text">Updated: {{timestamp}}</p>
-	      <button type="button" class="btn btn-primary btn-lg" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
+	      <button type="button" class="btn btn-primary" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
   			Sign In
 		 </button>
 
-	      <button type="button" class="btn btn-primary btn-lg" ng-class="{'hide': !user}" ng-click="signOut()" data-toggle="modal" data-target="#signInModal">
+	      <button type="button" class="btn btn-primary" ng-class="{'hide': !user}" ng-click="signOut()" data-toggle="modal" data-target="#signInModal">
   			Sign Out
-		 </button>		 
+		 </button>
+
+		 <p class="navbar-text pull-right">Logged In as {{user.username}}</p>		 
 	  </div><!-- /.container-fluid -->
 	</nav>	
 
 
-	<!-- Modal -->
+	<!-- Sign In / Sign Up Modal -->
 	<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="signInLabel">Sign In</h4>
+	        <h4 class="modal-title" id="signInLabel">Sign In / Sign Up</h4>
 	      </div>
 	      <div class="modal-body">
-		    <form ng-submit="login()">
-			  <div class="form-group">
-			    <label for="username">User Name</label>
-			    <input type="string" class="form-control" id="username" ng-model="username" placeholder="Enter User Name">
+
+			<div role="tabpanel">
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active"><a href="#signIn" aria-controls="signIn" role="tab" data-toggle="tab">Sign In</a></li>
+			    <li role="presentation"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Sign Up</a></li>
+			  </ul>
+
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="signIn">
+				    <form ng-submit="login()">
+					  <div class="form-group">
+					    <label for="username">User Name</label>
+					    <input type="string" class="form-control" id="username" ng-model="username" placeholder="Enter User Name">
+					  </div>
+					  <div class="form-group">
+					    <label for="password">Password</label>
+					    <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password">
+					  </div>
+					  <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+			    </div>
+			    <div role="tabpanel" class="tab-pane" id="signUp">
+				    <form ng-submit="signUp()">
+					  <div class="form-group">
+					    <label for="username">User Name</label>
+					    <input type="string" class="form-control" id="username" ng-model="username" placeholder="Enter User Name">
+					  </div>
+					  <div class="form-group">
+					    <label for="password">Password</label>
+					    <input type="password" class="form-control" id="passwordConfirm" ng-model="confirmPassword" placeholder="Password">
+					  </div>
+					  <div class="form-group">
+					    <label for="password">Password</label>
+					    <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password">
+					  </div>					  
+					  <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+			    </div>
 			  </div>
-			  <div class="form-group">
-			    <label for="password">Password</label>
-			    <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password">
-			  </div>
-			  <button type="submit" class="btn btn-default">Submit</button>
-			</form>
+
+			</div>
+
 	      </div>
 	    </div>
 	  </div>
@@ -97,6 +133,7 @@
 	          <th>Status</th>
 	          <th>Details</th>
 	          <th>Updated</th>
+	          <th>Favorites</th>
 	        </tr>
 	      </thead>
 	      <tbody>

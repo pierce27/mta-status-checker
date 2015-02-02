@@ -40,15 +40,63 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		success(function(data, status) {
 		  console.log(data);
 		  $scope.user = data;
-		  $('#signInModal').modal('hide');	
+		  $scope.showFavorites = true;
+		  $('#signInModal').modal('hide');
+
 		}).
 		error(function(data, status) {
 			// TODO Alert if error
 			console.log(data)
 			console.log('hello error')	  
+			alert('Incorrect Login')
 		  
 		});			
 	}
+
+	$scope.signUp = 	function(){
+	    var user = {
+	      'username': this.username,
+	      'password': this.password
+	    };
+
+	    if(this.password != this.confirmPassword){
+	    	alert('Passwords do not match')
+	    } else{
+			$http.post('/signUp', user).
+			success(function(data, status) {
+			  console.log(data);
+			  $scope.user = data;
+			  $scope.showFavorites = true;
+			  $('#signInModal').modal('hide');
+
+			}).
+			error(function(data, status) {
+				// TODO Alert if error
+				console.log(data)
+				console.log('hello error')	  
+				alert('Incorrect Login')
+			  
+			});				    	
+	    }
+
+		
+	}	
+
+	$scope.signOut = function(){
+		$http.get('/logout').
+		success(function(data, status){
+			console.log(status)
+			$scope.user = '';
+			document.cookie = '';
+			$scope.showFavorites = false;
+		}).
+		error(function(data, status){
+			// TODO Handle error
+			console.log(status)
+
+		})
+	}
+
 
 	$scope.modifyFavorites = function(line){
 		var favorites = angular.copy($scope.user.favorites);
@@ -73,22 +121,6 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		  });			
 		
 	}
-
-	$scope.signOut = function(){
-		$http.get('/logout').
-		success(function(data, status){
-			console.log(status)
-			$scope.user = '';
-			document.cookie = '';
-			$scope.showFavorites = false;
-		}).
-		error(function(data, status){
-			// TODO Handle error
-			console.log(status)
-
-		})
-	}
-
 
 	$scope.displayDetails = function(line){
 		$scope.currentLine = line;
