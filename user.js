@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+var url = 'mongodb://heroku_app33603871:f9c7duc480hd7kvt8m3940b6tv@ds039421.mongolab.com:39421/heroku_app33603871/mta'
+// 'mongodb://localhost/test'
+mongoose.connect(url);
 
 var User = mongoose.model('User',{
     username: String,
