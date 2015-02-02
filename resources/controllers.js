@@ -48,7 +48,25 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	}
 
 	$scope.modifyFavorites = function(line){
-		if($scope.user.favorites[])
+		var favorites = angular.copy($scope.user.favorites);
+		if(favorites[line.name[0]] == true){
+			favorites[line.name[0]] = false
+		} else{
+			favorites[line.name[0]] = true	
+		}
+		
+		// Send name to server to add it to favorites array or delete it
+		$http.post('/favorites', favorites).
+		  success(function(data, status, headers, config) {
+		  	console.log('saved: '+ data)
+		  	$scope.user = data;
+		  }).
+		  error(function(data, status, headers, config) {
+		    // TODO Handle Error
+		    console.log('error '+ data)
+
+		  });			
+		
 	}
 
 

@@ -37,3 +37,24 @@ exports.findUser = function(req,res){
 	  
 	})
 }
+
+
+exports.modifyFavorites = function(req, res){
+
+	// Find user and save doc
+	User.findOne({ username: req.cookies.user }, function (err, user){
+	  user.favorites = req.body;
+	  console.log('saved favorites for  ' + user.username)
+	  res.send(user)
+	  user.save();
+	});
+
+}
+
+
+
+
+
+
+
+

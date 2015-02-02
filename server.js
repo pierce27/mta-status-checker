@@ -28,30 +28,32 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 
+// Configure passport login strategy
+passport.use(new LocalStrategy(function(username, password, done) {
+    // no authentication logic here... just return done with an object with 2 fields
+    console.log(username);
+    user.findUserLogin(username, password, done);
+}));
+
 // Send all mta status data
 app.get('/mta/status', mta.status)
 
 // Render main view
 app.get("/", function(req, res){
-	console.log(util.inspect(req))
 	res.render('index.html')
 })
 
+// Get user data
 app.get('/user', user.findUser)
 
-
-passport.use(new LocalStrategy(function(username, password, done) {
-    // no authentication logic here... just return done with an object with 2 fields
-    console.log(username)
-    user.findUserLogin(username, password, done)
-}));
-
-
+// Login and set cookie
 app.post('/login', passport.authenticate('local'), function(req, res) { 
 	res.cookie('user', req.user.username, { maxAge: 2592000000 })
 	console.log(req.user.username)
 	res.send(req.user); 
 }); 
+
+app.post('/favorites', user.modifyFavorites)
  
 passport.serializeUser(function(user, done) {
   done(null, user);
