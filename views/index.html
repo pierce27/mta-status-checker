@@ -42,6 +42,7 @@
 			  <option value='SERVICE CHANGE'>Service Change</option>
 			  <option value='PLANNED WORK'>Planned Work</option>
 			  <option value='GOOD SERVICE'>Good Service</option>
+			  <option value='SUSPENDED'>Suspended</option>
 			</select>	
 
 		    <div class="checkbox">
@@ -64,7 +65,7 @@
   			Sign Out
 		 </button>
 
-		 <p class="navbar-text red">Delays <span class="badge">{{counts.delays}}</span></p>
+		 
 
 		 <!-- Log in text for when user is logged in -->
 		 <p ng-class="{'hide': !user}" class="navbar-text pull-right">Logged In as {{user.username}}</p>		 
@@ -134,6 +135,11 @@
 	</div>	
 
 	<div class="col-md-6">
+		<span class="text-success" >GOOD SERVICE <span class="badge" style="background-color:green">{{counts.good}}</span></span>
+		<span class="text-warning" >PLANNED WORK <span class="badge" style="background-color:orange">{{counts.planned}}</span></span>
+		<span class="text-warning" >SERVICE CHANGE <span class="badge" style="background-color:orange">{{counts.changes}}</span></span>
+		<span class="text-danger" >DELAYS <span class="badge" style="background-color:#d9534f">{{counts.delays}}</span></span>
+		<span class="text-danger" >SUSPENSIONS <span class="badge" style="background-color:#d9534f">{{counts.suspensions}}</span></span>
 		<!-- Lines Table -->
 	    <table class="table">
 	      <thead>
@@ -165,7 +171,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="signInLabel">{{currentLine.name[0]}}  <span class="label" ng-class="{'label-success': currentLine.status[0] == 'GOOD SERVICE', 'label-warning': currentLine.status[0] == 'PLANNED WORK' || currentLine.status[0] == 'SERVICE CHANGE', 'label-danger': currentLine.status[0] == 'DELAYS'}">{{currentLine.status[0]}}</span></h4>
+		        <h4 class="modal-title" id="signInLabel">{{currentLine.name[0]}}  <span class="label" ng-class="{'label-success': currentLine.status[0] == 'GOOD SERVICE', 'label-warning': currentLine.status[0] == 'PLANNED WORK' || currentLine.status[0] == 'SERVICE CHANGE', 'label-danger': currentLine.status[0] == 'DELAYS' || currentLine.status[0] == 'SUSPENDED'}">{{currentLine.status[0]}}</span></h4>
 		      </div>
 		      <div class="modal-body" ng-bind-html="currentLine.text[0]">
 		      	{{currentLine.text[0]}}

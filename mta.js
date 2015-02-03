@@ -6,7 +6,8 @@ var url = 'http://web.mta.info/status/serviceStatus.txt'
 var good = 0;
 var delays = 0;
 var planned = 0;
-var changes = 0;	
+var changes = 0;
+var suspended = 0;	
 
 
 exports.status = function(request, response){
@@ -23,7 +24,7 @@ exports.status = function(request, response){
 	    // parse xml
 	    parseString(xml, function (err, result) {
 	    	// Create one array of all lines
-	    	var data = {'timestamp':result.service.timestamp[0], 'counts':{'good': 0, 'delays':0, 'planned':0, 'changes':0}, 'lines':[]}
+	    	var data = {'timestamp':result.service.timestamp[0], 'counts':{'good': 0, 'delays':0, 'planned':0, 'changes':0, 'suspensions':0}, 'lines':[]}
 	    	data.lines = data.lines.concat(sanitize(result.service.subway[0].line, 'subway'));
 	    	data.lines = data.lines.concat( sanitize(result.service.bus[0].line, 'bus'));
 	    	data.lines = data.lines.concat(sanitize(result.service.BT[0].line, 'bt'));
@@ -33,13 +34,15 @@ exports.status = function(request, response){
 	    	data.counts.delays = delays;
 	    	data.counts.changes = changes;
 	    	data.counts.planned = planned;
+	    	data.counts.suspended = suspended;
 		    
 
 
 		    good = 0;
 		    delays = 0;
 		    planned = 0;
-		    changes = 0;	    	
+		    changes = 0;
+		    suspensions = 0;	    	
 	    	
 
 	    	// Send all mta lines to client side
@@ -82,6 +85,8 @@ var sanitize = function(lines, type){
     		changes += 1;
     	} else if(l.status[0] == 'PLANNED WORK'){
     		planned += 1;
+    	} else if(l.status[0] == 'SUSPENDED'){
+    		suspended += 1;
     	}
 
     	
