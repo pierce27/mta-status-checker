@@ -13,7 +13,8 @@
     "passport": "",
     "passport-local": "",
     "mongoose": "",
-    "cookie-parser": ""
+    "cookie-parser": "",
+    "bcrypt": ""
   },
   "devDependencies": {},
   "scripts": {

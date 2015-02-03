@@ -1,18 +1,18 @@
-var util = require('util');
-// MTA status functions
-var mta = require('./mta')
-// Routing middleware
-var http = require('http');
-var express = require('express');
-var app = express();
-// View engine dependency
-var engines = require('consolidate');
-// Login dependencites
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var user = require('./user')
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
+var util = require('util'),
+   // MTA status functions
+   mta = require('./mta'),
+    // Routing middleware
+    http = require('http'),
+    express = require('express'),
+    app = express(),
+    // View engine dependency
+    engines = require('consolidate'),
+    // Login dependencites
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    user = require('./user'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser')
 // View config
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/resources'));

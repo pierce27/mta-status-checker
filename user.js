@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 var url = 'mongodb://heroku_app33603871:f9c7duc480hd7kvt8m3940b6tv@ds039421.mongolab.com:39421/heroku_app33603871/mta'
 // 'mongodb://localhost/test'
 mongoose.connect(url);
@@ -9,19 +10,13 @@ var User = mongoose.model('User',{
     favorites: Object
 });
 
-var testuser = new User({username: 'apierce', password: 'password1', favorites: {'size':0}})
-testuser.save(function (err, testuser) {
-  if (err) return console.error(err);
-  console.log(testuser + 'saved')
-});
-
 exports.findUserLogin = function(username, password, done){
 
 	User.findOne({ 'username': username }, function (err, user) {
 	  if (err) return done(null, false);
 
 	  if(user){
-		if(user.password == password){
+		if(bcrypt.compareSync(password, user.password)){
 	  	  console.log('found user')
 	  	  return done(null, user)
 	    } else{
@@ -37,13 +32,16 @@ exports.findUserLogin = function(username, password, done){
 
 exports.createUser = function(username, password, done){
 
-	newUser = new User({username: username, password: password, favorites: {'size':0}})
+	var hash_password = bcrypt.hashSync(password, 8);
+	console.log(hash_password)
+
+	newUser = new User({username: username, password: hash_password, favorites: {'size':0}})
 	
 	User.findOne({ 'username': username }, function (err, user) {
 	  if (err) return done(null, false);
 
+	  // If user does not exist save it, other wise return an error
 	  if(!user){
-	  	console.log('no user')
 	  	newUser.save()
 	  	return done(null, newUser)
 	  } else{
