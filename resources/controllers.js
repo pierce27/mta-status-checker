@@ -2,6 +2,8 @@ var mta = angular.module('mta', ['ngSanitize']);
 
 mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {	
 
+	$scope.search ={name:'', status:'', type:''}
+
 	// Check for cookie and if it exists get user data from server
 	if(document.cookie){
 		console.log(document.cookie)
@@ -173,7 +175,9 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	}
 
 
-
+	$scope.statusFilter = function(status){
+		$scope.search.status = status;
+	}
 
 
 
