@@ -26,7 +26,10 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	$http({method: 'GET', url: '/mta/status'}).
 	success(function(data, status) {
 	  $scope.lines = data.lines;
-	  $scope.timestamp = data.timestamp 	  
+	  $scope.timestamp = data.timestamp 
+	  $scope.good = data.good;
+	  $scope.counts = data.counts;
+	  console.log($scope.counts);	  
 	}).
 	error(function(data, status) {
 		// TODO Alert if error
