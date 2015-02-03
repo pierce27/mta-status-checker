@@ -24,10 +24,10 @@
 	      <!-- FILTER INPUTS -->
 	      <form class="navbar-form navbar-left" role="search">
 	        <div class="form-group">
-	          <input ng-change="hideFavorites()" type="text" class="form-control" ng-model="search.name" placeholder="Search">
+	          <input type="text" class="form-control" ng-model="search.name" placeholder="Search">
 	        </div>
 
-			<select ng-change="hideFavorites()" class="form-control" ng-model='search.type'>
+			<select class="form-control" ng-model='search.type'>
 			  <option value=''>All</option>	
 			  <option value='subway'>Subway</option>
 			  <option value='bus'>Bus</option>
@@ -36,7 +36,7 @@
 			  <option value='mt'>Metro North</option>
 			</select>
 
-			<select ng-change="hideFavorites()" class="form-control" ng-model='search.status'>
+			<select class="form-control" ng-model='search.status'>
 			  <option value=''>All</option>	
 			  <option value='DELAY'>Delay</option>
 			  <option value='SERVICE CHANGE'>Service Change</option>
@@ -136,7 +136,7 @@
 
 	<div class="col-md-2">
 	</div>
-	
+
 	<div class="col-md-8" >
 		<span class="text-success" >GOOD SERVICE <span class="badge" style="background-color:green">{{counts.good}}</span></span>
 		<span class="text-warning" >PLANNED WORK <span class="badge" style="background-color:orange">{{counts.planned}}</span></span>
