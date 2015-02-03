@@ -1,5 +1,6 @@
 <html ng-app="mta" lang="en" class="csstransforms csstransforms3d csstransitions js cssanimations csstransitions"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
+		<title>MTA Status</title>
 		<!-- Angular -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.1/angular.min.js" type="text/javascript"></script>
 		<script src="https://code.angularjs.org/1.4.0-beta.1/angular-sanitize.js" type="text/javascript"></script>
@@ -27,8 +28,8 @@
 	          <input type="text" class="form-control" ng-model="search.name" placeholder="Search">
 	        </div>
 
-			<select class="form-control" ng-model='search.type'>
-			  <option value=''>All</option>	
+			<select class="form-control" ng-model='search.type' placeholder="Type">
+			  <option value=''>All Types</option>	
 			  <option value='subway'>Subway</option>
 			  <option value='bus'>Bus</option>
 			  <option value='lirr'>LIRR</option>
@@ -37,7 +38,7 @@
 			</select>
 
 			<select class="form-control" ng-model='search.status'>
-			  <option value=''>All</option>	
+			  <option value=''>All Status</option>	
 			  <option value='DELAY'>Delay</option>
 			  <option value='SERVICE CHANGE'>Service Change</option>
 			  <option value='PLANNED WORK'>Planned Work</option>
