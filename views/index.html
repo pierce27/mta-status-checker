@@ -59,9 +59,12 @@
 	      <p class="navbar-text">Updated: {{timestamp}}</p>
 
 	      <!-- Sign in and sign out buttons -->
-	      <button type="button" class="btn btn-default navbar-btn" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
-  			Sign In
-		 </button>
+	      <span data-toggle="tooltip" data-placement="right" title="Sign In to save favorite lines">
+	      	<button type="button" class="btn btn-default navbar-btn" ng-class="{'hide': user}" data-toggle="modal" data-target="#signInModal">
+  				Sign In
+		 	</button>
+		  </span>
+
 	      <button type="button" class="btn btn-default navbar-btn" ng-class="{'hide': !user}" ng-click="signOut()" >
   			Sign Out
 		 </button>
@@ -153,7 +156,7 @@
 	          <th>Status</th>
 	          <th>Details</th>
 	          <th>Updated</th>
-	          <th ng-class="{'hide': !user}">Favorites</th>
+	          <th data-toggle="tooltip" data-placement="top" title="Click plus or minus to remove or save favorites" ng-class="{'hide': !user}">Favorites</th>
 	        </tr>
 	      </thead>
 	      <tbody>

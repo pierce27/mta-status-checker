@@ -1,5 +1,9 @@
 var mta = angular.module('mta', ['ngSanitize']);
 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {	
 
 	$scope.search ={name:'', status:'', type:''}
@@ -184,3 +188,10 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 
 
 });
+
+
+
+
+
+
+
