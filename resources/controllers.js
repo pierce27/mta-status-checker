@@ -15,11 +15,7 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		success(function(data, status) {
 		  // Set user data in the scope
 		  $scope.user = data; 	
-		  if($scope.user.favorites.size > 0){
-		  	$scope.showFavorites = true;
-		  } else{
-		  	$scope.showFavorites = false;
-		  } 
+
 		}).
 		error(function(data, status) {
 			// TODO Alert if error
