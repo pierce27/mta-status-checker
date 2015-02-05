@@ -140,16 +140,16 @@
 	  </div>
 	</div>	
 
-	<div class="col-md-2">
-	</div>
-
 	<!-- Main View -->
-	<div class="col-md-8" >
-		<span class="text-success" style="cursor:hand" ng-click="statusFilter('GOOD SERVICE')">GOOD SERVICE <span class="badge" style="background-color:green">{{counts.good}}</span></span>
-		<span class="text-warning" style="cursor:hand" ng-click="statusFilter('PLANNED WORK')">PLANNED WORK <span class="badge" style="background-color:orange">{{counts.planned}}</span></span>
-		<span class="text-warning" style="cursor:hand" ng-click="statusFilter('SERVICE CHANGE')">SERVICE CHANGE <span class="badge" style="background-color:orange">{{counts.changes}}</span></span>
-		<span class="text-danger" style="cursor:hand" ng-click="statusFilter('DELAYS')">DELAYS <span class="badge" style="background-color:#d9534f">{{counts.delays}}</span></span>
-		<span class="text-danger" style="cursor:hand" ng-click="statusFilter('SUSPENSIONS')">SUSPENSIONS <span class="badge" style="background-color:#d9534f">{{counts.suspensions}}</span></span>
+	<div class="col-md-10" >
+		<div style="padding-bottom: 20px">
+			<span class="text-success" style="cursor:hand" ng-click="statusFilter('GOOD SERVICE')">GOOD SERVICE <span class="badge" style="background-color:green">{{counts.good}}</span></span>
+			<span class="text-warning" style="cursor:hand" ng-click="statusFilter('PLANNED WORK')">PLANNED WORK <span class="badge" style="background-color:orange">{{counts.planned}}</span></span>
+			<span class="text-warning" style="cursor:hand" ng-click="statusFilter('SERVICE CHANGE')">SERVICE CHANGE <span class="badge" style="background-color:orange">{{counts.changes}}</span></span>
+			<span class="text-danger" style="cursor:hand" ng-click="statusFilter('DELAYS')">DELAYS <span class="badge" style="background-color:#d9534f">{{counts.delays}}</span></span>
+			<span class="text-danger" style="cursor:hand" ng-click="statusFilter('SUSPENSIONS')">SUSPENSIONS <span class="badge" style="background-color:#d9534f">{{counts.suspensions}}</span></span>			
+		</div>
+		
 
 		<!-- Lines Table -->
 	    <table class="table">
