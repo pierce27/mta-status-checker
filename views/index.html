@@ -99,6 +99,7 @@
 			  <div class="tab-content">
 			  	<!-- Sign In -->
 			    <div role="tabpanel" class="tab-pane active" id="signIn">
+			    	<div class="alert alert-danger hide" id="signInWarning" role="alert">{{signInWarning}}</div>
 				    <form ng-submit="signIn()">
 					  <div class="form-group">
 					    <label for="username">User Name</label>
@@ -113,6 +114,7 @@
 			    </div>
 			    <div role="tabpanel" class="tab-pane" id="signUp">
 			    	<!-- Sign Up -->
+			    	<div class="alert alert-danger hide" id="signUpWarning" role="alert">{{signUpWarning}}</div>
 				    <form ng-submit="signUp()">
 					  <div class="form-group">
 					    <label for="username">User Name</label>

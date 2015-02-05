@@ -1,5 +1,6 @@
 var mta = angular.module('mta', ['ngSanitize']);
 
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -55,12 +56,15 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 		  } else{
 		  	$scope.showFavorites = false;
 		  } 
+		  $('#signInWarning').addClass('hide')			
 		  $('#signInModal').modal('hide');
 
 		}).
 		error(function(data, status) {
+
+	    	$scope.signInWarning = 'Incorrect Login'
+	    	$('#signInWarning').removeClass('hide')			
 			
-			alert('Incorrect Login')
 		  
 		});			
 	}
@@ -73,9 +77,15 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	      'password': this.password
 	    };
 
+
+
 	    // Check that passwords match
 	    if(this.password != this.confirmPassword){
-	    	alert('Passwords do not match')
+	    	$scope.signUpWarning = 'Passwords Do Not Match'
+	    	$('#signUpWarning').removeClass('hide')
+	    } else if(this.username.length < 6 || this.password.length < 6){
+	    	$scope.signUpWarning = 'Username / Pssword must be 6 characters or more'
+	    	$('#signUpWarning').removeClass('hide')	    	
 	    } else{
 	    	// If passwords match then send data to server
 			$http.post('/signUp', user).
@@ -85,7 +95,9 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 			  // Set show favorites to false because new users do not have any
 		  	  $scope.showFavorites = false;
 		  	  // Hide sign in modal
+		  	  $('#signUpWarning').addClass('hide')
 			  $('#signInModal').modal('hide');
+			  $scope.signUpWarning = ''
 
 			}).
 			error(function(data, status) {
@@ -178,6 +190,7 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	$scope.statusFilter = function(status){
 		$scope.search.status = status;
 	}
+
 
 
 
