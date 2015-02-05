@@ -4,12 +4,15 @@ var url = 'mongodb://heroku_app33603871:f9c7duc480hd7kvt8m3940b6tv@ds039421.mong
 // 'mongodb://localhost/test'
 mongoose.connect(url);
 
+// Create User Schema
 var User = mongoose.model('User',{
     username: String,
     password: String,
     favorites: Object
 });
 
+
+// Find user in DB and return it when logging in.
 exports.findUserLogin = function(username, password, done){
 
 	User.findOne({ 'username': username }, function (err, user) {
@@ -30,6 +33,7 @@ exports.findUserLogin = function(username, password, done){
 	})
 }
 
+// Create User when signing up. Encrypt password to save to DB
 exports.createUser = function(username, password, done){
 
 	var hash_password = bcrypt.hashSync(password, 8);
@@ -51,8 +55,10 @@ exports.createUser = function(username, password, done){
 	})	
 }
 
+// Return User to client when a user is returning to site and has proper cookie
 exports.findUser = function(req,res){
 
+	// Find user based on cookie
 	User.findOne({ 'username': req.cookies.user }, function (err, user) {
 	  if (err) return err;
 	  res.send(user)
@@ -60,7 +66,7 @@ exports.findUser = function(req,res){
 	})
 }
 
-
+// Add or Delete favorite for User
 exports.modifyFavorites = function(req, res){
 
 	// Find user and save doc

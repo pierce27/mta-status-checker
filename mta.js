@@ -1,18 +1,20 @@
-var http = require('http');
-var sanitizeHtml = require('sanitize-html');
-var parseString = require('xml2js').parseString;
-var url = 'http://web.mta.info/status/serviceStatus.txt'
+var http = require('http'),
+	sanitizeHtml = require('sanitize-html'),
+	parseString = require('xml2js').parseString,
+	url = 'http://web.mta.info/status/serviceStatus.txt';
 
-var good = 0;
-var delays = 0;
-var planned = 0;
-var changes = 0;
-var suspended = 0;	
+// Init count vars for stautus counts
+var good = 0,
+	delays = 0,
+	planned = 0,
+	changes = 0,
+	suspended = 0,
+	other = 0;
 
 
 exports.status = function(request, response){
 
-
+	// Get data from MTA site
 	var req = http.get(url, function(res) {
 	  // save the data
 	  var xml = '';
@@ -30,6 +32,7 @@ exports.status = function(request, response){
 	    	data.lines = data.lines.concat(sanitize(result.service.BT[0].line, 'bt'));
 	    	data.lines = data.lines.concat(sanitize(result.service.LIRR[0].line, 'lirr'));
 	    	data.lines = data.lines.concat(sanitize(result.service.MetroNorth[0].line, 'mt'));
+	    	// Add counts of different status's to data object
 	    	data.counts.good = good;
 	    	data.counts.delays = delays;
 	    	data.counts.changes = changes;
@@ -37,16 +40,17 @@ exports.status = function(request, response){
 	    	data.counts.suspended = suspended;
 		    
 
-
+	    	// Reset count vars
 		    good = 0;
 		    delays = 0;
 		    planned = 0;
 		    changes = 0;
-		    suspensions = 0;	    	
+		    suspensions = 0;
+		    other = 0;	    	
 	    	
 
 	    	// Send all mta lines to client side
-		    response.send(data)
+		    response.send(data);
 
 		});
 
@@ -56,27 +60,27 @@ exports.status = function(request, response){
 
 	req.on('error', function(err) {
 	  // send error
-	  response.send(err)
+	  response.send(err);
 	});
 }
 
 // Format array of lines to include type and sanitize html
 var sanitize = function(lines, type){
 	
-
+	// Loop through the lines and sanitize HTML as well as assign each one the proper type.
     for(line in lines){
 
     	var l = lines[line];
-    	// console.log(l.name)
-    	// console.log(l.status)
-    	// console.log('LINE NUMBER: ' + line)
 
+    	// Sanitize HTML
     	if(l.text){
     		l.text[0] = sanitizeHtml(l.text[0]); 
     	}
 
+    	// Assignt type to type attr on line object
     	l.type = type;
 
+    	// Increment status count
     	if(l.status[0] == 'GOOD SERVICE'){
     		good = good + 1;
     	} else if(l.status[0] == 'DELAYS'){
@@ -87,6 +91,8 @@ var sanitize = function(lines, type){
     		planned += 1;
     	} else if(l.status[0] == 'SUSPENDED'){
     		suspended += 1;
+    	} else{
+    		other += 1;
     	}
 
     	
@@ -94,5 +100,5 @@ var sanitize = function(lines, type){
    
     
 
-    return lines	
+    return lines;	
 }
