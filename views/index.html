@@ -48,7 +48,7 @@
 
 		    <div class="checkbox">
 		      <label ng-class="{'hide': !user}">
-		        <input ng-model="showFavorites"  type="checkbox"> Favorites <span class="badge">{{user.favorites.size}}</span>
+		        <input ng-model="showFavorites"  type="checkbox"> Show Favorites <span class="badge">{{user.favorites.size}}</span>
 		      </label>
 		    </div>					
 
@@ -157,7 +157,7 @@
 	          <th>Status</th>
 	          <th>Details</th>
 	          <th>Updated</th>
-	          <th data-toggle="tooltip" data-placement="top" title="Click plus or minus to save or remove favorites" ng-class="{'hide': !user}">Show Favorites</th>
+	          <th data-toggle="tooltip" data-placement="top" title="Click plus or minus to save or remove favorites" ng-class="{'hide': !user}">Favorites</th>
 	        </tr>
 	      </thead>
 	      <tbody>
