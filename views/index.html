@@ -159,7 +159,7 @@
 	          <th>Status</th>
 	          <th>Details</th>
 	          <th>Updated</th>
-	          <th data-toggle="tooltip" data-placement="top" title="Click plus or minus to save or remove favorites" ng-class="{'hide': !user}">Favorites</th>
+	          <th data-toggle="tooltip" data-placement="top" title="Click plus or minus to save or remove favorites" ng-class="{'hide': !user}">Favorite</th>
 	        </tr>
 	      </thead>
 	      <tbody>
@@ -170,8 +170,9 @@
 	          <!-- Info button for more details only if they are available -->
 	          <td><a ng-click="displayDetails(line)"><span ng-class="{'hide': !line.text[0]}" class="glyphicon glyphicon-info-sign"></span></a></td>
 	          <td>{{line.Date[0]}} {{line.Time[0]}}</td>
-	          <!-- Add or remove favorites button -->
-	          <td><a ng-click='modifyFavorites(line)'><span ng-class="{'hide': !user, 'glyphicon-plus': !user.favorites[line.name[0]], 'glyphicon-minus': user.favorites[line.name[0]]}" class="glyphicon  pull-right" aria-hidden="true"></span></a></td>
+	          <!-- Add or remove favorites check box -->
+	          <td><input ng-click='modifyFavorites(line)' ng-model='user.favorites[line.name[0]]'  type="checkbox"></td>
+	          
 	        </tr>
 	      </tbody>
 	    </table>

@@ -135,13 +135,13 @@ mta.controller('mtaCtrl', function PublisherCtrl($scope, $http) {
 	// ADD OR REMOVE A FAVORITE
 	$scope.modifyFavorites = function(line){
 		// Make copy of current user favorites
-		var favorites = angular.copy($scope.user.favorites);
-		// If the line being modified is a favorite then mark it as false to remove from favorites and decrement by 1 else do the inverse
-		if(favorites[line.name[0]] == true){
-			favorites[line.name[0]] = false
+		var favorites = $scope.user.favorites;
+		// If new favorites is removed then decrement it otherwise increment it
+		if(favorites[line.name[0]] == false){
+			
 			favorites.size = favorites.size - 1
 		} else{
-			favorites[line.name[0]] = true	
+			
 			favorites.size = favorites.size + 1
 		}
 		
